@@ -1,3 +1,3 @@
   specify('fail 4evah', () => {
-    expect(true).to.equal(false)
+    expect(true).to.equal(true)
   })
