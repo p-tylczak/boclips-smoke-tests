@@ -5,11 +5,11 @@ jobs:
   - get: source
     resource: smoke-tests
   - task: run
-    file: smoke-tests/pipeline/tasks/run.yml
+    file: source/pipeline/tasks/run.yml
     on_failure:
       in_parallel:
       - task: alert
-        file: smoke-tests/pipeline/tasks/alert.yml
+        file: source/pipeline/tasks/alert.yml
         params:
           ALERT_MANAGER_HOSTS: ((alert-manager.hosts))
       - put: test-results
