@@ -30,3 +30,9 @@ resources:
     bucket: boclips-test-results
     json_key: ((gcs.key))
     versioned_file: "smoke-tests/results.tar"
+
+- name: gcs
+  type: registry-image
+  source:
+    repository: frodenas/gcs-resource
+    tag: "v0.5.1"
