@@ -1,0 +1,25 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: boclipsconcourse/junit2alertmanager
+    tag: "0.1.0"
+
+inputs:
+- name: test-results
+
+params:
+  ALERT_MANAGER_HOSTS:
+
+run:
+  path: /bin/sh
+  args:
+  - -c
+  - |
+    /go/bin/junit2alertmanager \
+      --junit test-results/test-output.xml \
+      --alert-name "Smoke Tests" \
+      --labels severity=critical \
+      > /dev/null 2>&1

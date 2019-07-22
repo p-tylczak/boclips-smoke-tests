@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+cwd="$(cd "$(dirname "$0")" && pwd)"
+
+ALERT_MANAGER_HOSTS="$(get-k8s-concourse-secret smoke-tests alert-manager hosts)"
+[ -z "$ALERT_MANAGER_HOSTS" ] && exit 1
+
+export ALERT_MANAGER_HOSTS
+
+fly --target ci \
+    execute \
+    --config "$cwd/pipeline/tasks/alert.yml" \
+    --input test-results="$cwd/test-results"

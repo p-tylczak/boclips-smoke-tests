@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+cwd="$(cd "$(dirname "$0")" && pwd)"
+
+fly --target ci \
+    execute \
+    --config "$cwd/pipeline/tasks/run.yml" \
+    --input source="$cwd" \
+    --output test-results=test-results

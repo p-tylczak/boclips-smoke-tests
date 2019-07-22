@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+strip_xml_for_junit2alertmanager () {
+    sed '1d;2d;$d'
+}
+
+produce_output () {
+    strip_xml_for_junit2alertmanager \
+        < source/cypress/results/test-output.xml \
+        > test-results/test-output.xml
+    mkdir -p source/cypress/{screenshots,videos}
+    touch source/cypress/{screenshots,videos}/tar-avoid-empty-dir
+    cd "source/cypress" || exit
+    tar -cf ../../test-results/results.tar \
+        screenshots/* \
+        videos/*
+}
+trap produce_output EXIT
+
+(
+cd source || exit 1
+npm ci || exit 1
+npm run test
+)
