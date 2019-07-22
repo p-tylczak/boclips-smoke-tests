@@ -1,10 +1,10 @@
 ---
 jobs:
-- name: run
+- name: publishers
   plan:
   - get: source
     resource: smoke-tests
-  - get: every-three-minutes
+  - get: not-often
     trigger: true
   - task: run
     file: source/pipeline/tasks/run.yml
@@ -22,6 +22,7 @@ jobs:
 resources:
 - name: smoke-tests
   type: git
+  icon: fire
   source:
     branch: master
     uri: https://github.com/boclips/smoke-tests.git
@@ -33,11 +34,11 @@ resources:
     json_key: ((gcs.key))
     versioned_file: "smoke-tests/results.tar"
 
-- name: every-three-minutes
+- name: not-often
   type: time
   icon: clock-outline
   source:
-    interval: 180s
+    interval: 10m
 
 resource_types:
 - name: gcs
