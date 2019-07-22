@@ -4,6 +4,8 @@ jobs:
   plan:
   - get: source
     resource: smoke-tests
+  - get: every-three-minutes
+    trigger: true
   - task: run
     file: source/pipeline/tasks/run.yml
     on_failure:
@@ -30,6 +32,12 @@ resources:
     bucket: boclips-test-results
     json_key: ((gcs.key))
     versioned_file: "smoke-tests/results.tar"
+
+- name: every-three-minutes
+  type: time
+  icon: clock-outline
+  source:
+    interval: 180s
 
 resource_types:
 - name: gcs
