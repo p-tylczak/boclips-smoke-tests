@@ -29,6 +29,7 @@ resources:
 
 - name: test-results
   type: gcs
+  icon: video
   source:
     bucket: boclips-test-results
     json_key: ((gcs.key))
