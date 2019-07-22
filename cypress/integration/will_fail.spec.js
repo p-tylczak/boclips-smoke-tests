@@ -1,3 +1,3 @@
-  specify('Videos Journey: Search, Filtering, Browsing & Rating', () => {
+  specify('fail 4evah', () => {
     expect(true).to.equal(false)
   })
