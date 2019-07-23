@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 strip_xml_for_junit2alertmanager () {
-    xmllint --xpath '/testsuites/testsuite[@name!=""]' -
+    xmllint --xpath '/testsuites/testsuite[@name!="" and @name!="Root Suite"]' -
 }
 
 produce_output () {
