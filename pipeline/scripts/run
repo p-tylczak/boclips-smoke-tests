@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 strip_xml_for_junit2alertmanager () {
-    sed '1d;2d;$d'
+    xmllint --xpath '/testsuites/testsuite[@name!=""]' -
 }
 
 produce_output () {
+    apt install libxml2-utils
     strip_xml_for_junit2alertmanager \
         < source/cypress/results/test-output.xml \
         > test-results/test-output.xml
