@@ -30,7 +30,7 @@ jobs:
   - task: run
     file: source/pipeline/tasks/run.yml
     params:
-      SPEC: cypress/integration/getty-ingest.spec.js
+      SPEC: cypress/integration/getty-ingest.spec.ts
     on_failure: *alert
 
 resources:
