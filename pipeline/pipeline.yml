@@ -9,7 +9,7 @@ jobs:
   - task: run
     file: source/pipeline/tasks/run.yml
     params:
-      SPEC: cypress/integration/publishers.spec.js
+      SPEC: cypress/integration/publishers.spec.ts
     on_failure: &alert
       in_parallel:
       - task: alert
