@@ -17,8 +17,14 @@ produce_output () {
 }
 trap produce_output EXIT
 
+if [ -z "$SPEC" ]
+then
+    echo "Must specify SPEC"
+    exit 1
+fi
+
 (
 cd source || exit 1
 npm ci || exit 1
-npm run test
+npm run test -- --spec=$SPEC
 )

@@ -8,7 +8,9 @@ jobs:
     trigger: true
   - task: run
     file: source/pipeline/tasks/run.yml
-    on_failure:
+    params:
+      SPEC: cypress/integration/publishers.spec.js
+    on_failure: &alert
       in_parallel:
       - task: alert
         file: source/pipeline/tasks/alert.yml
@@ -18,6 +20,18 @@ jobs:
         params:
           file: test-results/results.tar
           predefined_acl: projectPrivate
+
+- name: getty-ingest
+  plan:
+  - get: source
+    resource: smoke-tests
+  - get: not-often
+    trigger: true
+  - task: run
+    file: source/pipeline/tasks/run.yml
+    params:
+      SPEC: cypress/integration/getty-ingest.spec.js
+    on_failure: *alert
 
 resources:
 - name: smoke-tests

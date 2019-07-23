@@ -2,9 +2,17 @@
 
 set -e
 
+spec=$1
+
 cwd="$(cd "$(dirname "$0")" && pwd)"
 
-fly --target ci \
+if [ -z "$spec" ]
+then
+    echo "Usage: fly-run SPEC"
+    exit 1
+fi
+
+SPEC=$spec fly --target ci \
     execute \
     --config "$cwd/pipeline/tasks/run.yml" \
     --input source="$cwd" \

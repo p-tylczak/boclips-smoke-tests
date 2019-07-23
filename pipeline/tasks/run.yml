@@ -16,6 +16,9 @@ outputs:
 run:
   path: source/pipeline/scripts/run
 
+params:
+  SPEC:
+
 caches:
 - path: ../../../root/.cache
 - path: ../../../root/.npm
