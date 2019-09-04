@@ -21,5 +21,4 @@ run:
     /go/bin/junit2alertmanager \
       --junit test-results/test-output.xml \
       --alert-name "Smoke Tests" \
-      --labels severity=warning \
-      > /dev/null 2>&1
+      --labels severity=warning
