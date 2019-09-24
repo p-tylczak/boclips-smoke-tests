@@ -12,6 +12,7 @@ inputs:
 
 outputs:
 - name: test-results
+- name: metrics
 
 run:
   path: source/pipeline/scripts/run

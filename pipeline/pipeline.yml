@@ -1,4 +1,20 @@
 ---
+meta:
+  upload_media:
+    &upload_media
+    put: test-results
+    params:
+      file: test-results/results.tar
+      predefined_acl: projectPrivate
+
+  upload_metrics:
+    &upload_metrics
+    put: replace-me
+    params:
+      file: metrics/prometheus
+      cache_control: "private, max-age=0, no-transform"
+      predefined_acl: "publicRead"
+
 jobs:
 - name: publishers
   plan:
@@ -10,16 +26,10 @@ jobs:
     file: source/pipeline/tasks/run.yml
     params:
       SPEC: cypress/integration/publishers.spec.ts
-    on_failure: &alert
-      in_parallel:
-      - task: alert
-        file: source/pipeline/tasks/alert.yml
-        params:
-          ALERT_MANAGER_HOSTS: ((alert-manager.hosts))
-      - put: test-results
-        params:
-          file: test-results/results.tar
-          predefined_acl: projectPrivate
+    on_failure: *upload_media
+    ensure:
+      <<: *upload_metrics
+      put: publishers-metrics
 
 - name: getty-ingest
   plan:
@@ -31,7 +41,10 @@ jobs:
     file: source/pipeline/tasks/run.yml
     params:
       SPEC: cypress/integration/getty-ingest.spec.ts
-    on_failure: *alert
+    on_failure: *upload_media
+    ensure:
+      <<: *upload_metrics
+      put: getty-ingest-metrics
 
 resources:
 - name: smoke-tests
@@ -48,6 +61,22 @@ resources:
     bucket: boclips-test-results
     json_key: ((gcs.key))
     versioned_file: "smoke-tests/results.tar"
+
+- name: publishers-metrics
+  type: gcs
+  icon: chart-line
+  source:
+    bucket: boclips-smoke-test-results
+    json_key: ((gcs.key))
+    versioned_file: publishers
+
+- name: getty-ingest-metrics
+  type: gcs
+  icon: chart-line
+  source:
+    bucket: boclips-smoke-test-results
+    json_key: ((gcs.key))
+    versioned_file: getty-ingest
 
 - name: not-often
   type: time

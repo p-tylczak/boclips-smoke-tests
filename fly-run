@@ -9,6 +9,8 @@ cwd="$(cd "$(dirname "$0")" && pwd)"
 if [ -z "$spec" ]
 then
     echo "Usage: fly-run SPEC"
+    echo
+    echo "e.g. fly-run cypress/integration/publishers.spec.ts"
     exit 1
 fi
 
@@ -16,4 +18,5 @@ SPEC=$spec fly --target ci \
     execute \
     --config "$cwd/pipeline/tasks/run.yml" \
     --input source="$cwd" \
-    --output test-results=test-results
+    --output test-results=test-results \
+    --output metrics=metrics
