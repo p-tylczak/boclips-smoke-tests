@@ -14,10 +14,10 @@ produce_metric () {
     gauge_value=$1
     spec_name=$(basename "$2" .spec.ts)
     gauge_name=boclips_smoke_test_failure_total
-cat <<EOF
+    cat <<EOF
 # HELP $gauge_name
 # TYPE $gauge_name gauge
-$gauge_name{spec=\"$spec_name\"} $gauge_value.0
+$gauge_name{spec="$spec_name"} $gauge_value.0
 EOF
 }
 
