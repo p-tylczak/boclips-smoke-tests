@@ -15,7 +15,7 @@ outputs:
 - name: metrics
 
 run:
-  path: source/pipeline/scripts/run
+  path: source/pipeline/scripts/cypress
 
 params:
   SPEC:
