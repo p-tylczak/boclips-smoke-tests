@@ -23,7 +23,7 @@ jobs:
   - get: not-often
     trigger: true
   - task: run
-    file: source/pipeline/tasks/cypress.yml
+    file: source/pipeline/tasks/cypress.yaml
     params:
       SPEC: cypress/integration/publishers.spec.ts
     on_failure: *upload_media
@@ -38,7 +38,7 @@ jobs:
   - get: not-often
     trigger: true
   - task: run
-    file: source/pipeline/tasks/cypress.yml
+    file: source/pipeline/tasks/cypress.yaml
     params:
       SPEC: cypress/integration/getty-ingest.spec.ts
     on_failure: *upload_media
