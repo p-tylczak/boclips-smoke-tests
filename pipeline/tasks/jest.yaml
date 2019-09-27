@@ -1,0 +1,24 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: 10.16-buster
+
+inputs:
+- name: smoke-tests
+
+outputs:
+- name: metrics
+
+run:
+  path: smoke-tests/pipeline/scripts/jest
+
+params:
+  SPEC:
+
+caches:
+- path: ../../../root/.cache
+- path: ../../../root/.npm

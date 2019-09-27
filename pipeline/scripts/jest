@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+produce_metric () {
+    gauge_value=$1
+    spec_name=$(basename "$2" .spec.ts)
+    gauge_name=boclips_smoke_test_failure_total
+    cat <<EOF
+# HELP $gauge_name
+# TYPE $gauge_name gauge
+$gauge_name{spec="$spec_name"} $gauge_value.0
+EOF
+}
+
+if [ -z "$SPEC" ]
+then
+    echo "Must specify SPEC"
+    exit 1
+fi
+
+metrics_output=../metrics/prometheus
+
+(
+cd source || exit 1
+npm ci || exit 1
+
+if npm run test-api -- --testNamePattern "$SPEC"
+then
+    produce_metric 0 "$SPEC" > $metrics_output
+    exit 0
+else
+    produce_metric 1 "$SPEC" > $metrics_output
+    exit 1
+fi
+)
