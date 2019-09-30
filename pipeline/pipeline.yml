@@ -33,7 +33,7 @@ jobs:
   - task: run-api-tests
       file: source/pipeline/tasks/jest.yaml
       params:
-        SPEC: ./api/*p1*
+        SPEC: ./api/p1*
         TEACHERS_USERNAME: ((teachers.username))
         TEACHERS_PASSWORD: ((teachers.password))
       ensure:
@@ -45,7 +45,7 @@ jobs:
   - task: run
       file: source/pipeline/tasks/jest.yaml
       params:
-        SPEC: ./api/*p2*
+        SPEC: ./api/p2*
         TEACHERS_USERNAME: ((teachers.username))
         TEACHERS_PASSWORD: ((teachers.password))
       ensure:
