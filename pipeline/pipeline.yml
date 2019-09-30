@@ -16,7 +16,7 @@ meta:
       predefined_acl: "publicRead"
 
 jobs:
-- name: publishers
+- name: p1-ui
   plan:
   - get: source
     resource: smoke-tests
@@ -31,22 +31,7 @@ jobs:
       <<: *upload_metrics
       put: publishers-metrics
 
-- name: getty-ingest
-  plan:
-  - get: source
-    resource: smoke-tests
-  - get: not-often
-    trigger: true
-  - task: run
-    file: source/pipeline/tasks/cypress.yaml
-    params:
-      SPEC: cypress/integration/getty-ingest.spec.ts
-    on_failure: *upload_media
-    ensure:
-      <<: *upload_metrics
-      put: getty-ingest-metrics
-
-- name: p1s
+- name: p1-api
   plan:
   - get: source
     resource: smoke-tests
@@ -55,12 +40,28 @@ jobs:
   - task: run
     file: source/pipeline/tasks/jest.yaml
     params:
-      SPEC: ./api/*
+      SPEC: ./api/*p1*
       TEACHERS_USERNAME: ((teachers.username))
       TEACHERS_PASSWORD: ((teachers.password))
     ensure:
       <<: *upload_metrics
-      put: p1-metrics
+      put: p1-api-metrics
+
+- name: p2-api
+  plan:
+    - get: source
+      resource: smoke-tests
+    - get: not-often
+      trigger: true
+    - task: run
+      file: source/pipeline/tasks/jest.yaml
+      params:
+        SPEC: ./api/*p2*
+        TEACHERS_USERNAME: ((teachers.username))
+        TEACHERS_PASSWORD: ((teachers.password))
+      ensure:
+        <<: *upload_metrics
+        put: p2-api-metrics
 
 resources:
 - name: smoke-tests
@@ -101,6 +102,14 @@ resources:
     bucket: boclips-smoke-test-metrics
     json_key: ((gcs.key))
     versioned_file: p1-metrics
+
+- name: p2-metrics
+  type: gcs
+  icon: chart-line
+  source:
+    bucket: boclips-smoke-test-metrics
+    json_key: ((gcs.key))
+    versioned_file: p2-metrics
 
 - name: not-often
   type: time
