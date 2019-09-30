@@ -22,7 +22,7 @@ jobs:
     resource: smoke-tests
   - get: not-often
     trigger: true
-  - task: run
+  - task: run-ui-tests
     file: source/pipeline/tasks/cypress.yaml
     params:
       SPEC: cypress/integration/p1.*.spec.ts
@@ -30,7 +30,7 @@ jobs:
     ensure:
       <<: *upload_metrics
       put: p1-ui-metrics
-  - task: run
+  - task: run-api-tests
       file: source/pipeline/tasks/jest.yaml
       params:
         SPEC: ./api/*p1*
