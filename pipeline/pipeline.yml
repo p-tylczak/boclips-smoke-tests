@@ -42,6 +42,10 @@ jobs:
 
 - name: p2-tests
   plan:
+  - get: source
+    resource: smoke-tests
+  - get: not-often
+    trigger: true
   - task: run
     file: source/pipeline/tasks/jest.yaml
     params:
