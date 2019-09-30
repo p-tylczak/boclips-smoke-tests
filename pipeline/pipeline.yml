@@ -92,6 +92,14 @@ resources:
     json_key: ((gcs.key))
     versioned_file: getty-ingest
 
+- name: p1-metrics
+  type: gcs
+  icon: chart-line
+  source:
+    bucket: boclips-smoke-test-metrics
+    json_key: ((gcs.key))
+    versioned_file: p1-metrics
+
 - name: not-often
   type: time
   icon: clock-outline
