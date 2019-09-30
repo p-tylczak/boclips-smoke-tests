@@ -46,6 +46,20 @@ jobs:
       <<: *upload_metrics
       put: getty-ingest-metrics
 
+- name: p1s
+  plan:
+  - get: source
+    resource: smoke-tests
+  - get: not-often
+    trigger: true
+  - task: run
+    file: source/pipeline/tasks/jest.yaml
+    params:
+      SPEC: ./api/*
+    ensure:
+      <<: *upload_metrics
+      put: p1-metrics
+
 resources:
 - name: smoke-tests
   type: git
