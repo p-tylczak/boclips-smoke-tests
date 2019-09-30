@@ -8,16 +8,18 @@ image_resource:
     tag: 10.16-buster
 
 inputs:
-- name: smoke-tests
+- name: source
 
 outputs:
 - name: metrics
 
 run:
-  path: smoke-tests/pipeline/scripts/jest
+  path: source/pipeline/scripts/jest
 
 params:
   SPEC:
+  TEACHERS_USERNAME:
+  TEACHERS_PASSWORD:
 
 caches:
 - path: ../../../root/.cache

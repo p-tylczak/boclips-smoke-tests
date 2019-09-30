@@ -8,15 +8,14 @@ cwd="$(cd "$(dirname "$0")" && pwd)"
 
 if [ -z "$spec" ]
 then
-    echo "Usage: fly-cypress SPEC"
+    echo "Usage: fly-jest SPEC"
     echo
-    echo "e.g. fly-cypress cypress/integration/publishers.spec.ts"
+    echo "e.g. fly-jest api/*"
     exit 1
 fi
 
 SPEC=$spec fly --target ci \
     execute \
-    --config "$cwd/pipeline/tasks/cypress.yaml" \
+    --config "$cwd/pipeline/tasks/jest.yaml" \
     --input source="$cwd" \
-    --output test-results=test-results \
     --output metrics=metrics
