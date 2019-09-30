@@ -31,26 +31,26 @@ jobs:
       <<: *upload_metrics
       put: p1-ui-metrics
   - task: run-api-tests
-      file: source/pipeline/tasks/jest.yaml
-      params:
-        SPEC: ./api/p1*
-        TEACHERS_USERNAME: ((teachers.username))
-        TEACHERS_PASSWORD: ((teachers.password))
-      ensure:
-        <<: *upload_metrics
-        put: p1-api-metrics
+    file: source/pipeline/tasks/jest.yaml
+    params:
+      SPEC: ./api/p1*
+      TEACHERS_USERNAME: ((teachers.username))
+      TEACHERS_PASSWORD: ((teachers.password))
+    ensure:
+      <<: *upload_metrics
+      put: p1-api-metrics
 
 - name: p2-tests
   plan:
   - task: run
-      file: source/pipeline/tasks/jest.yaml
-      params:
-        SPEC: ./api/p2*
-        TEACHERS_USERNAME: ((teachers.username))
-        TEACHERS_PASSWORD: ((teachers.password))
-      ensure:
-        <<: *upload_metrics
-        put: p2-api-metrics
+    file: source/pipeline/tasks/jest.yaml
+    params:
+      SPEC: ./api/p2*
+      TEACHERS_USERNAME: ((teachers.username))
+      TEACHERS_PASSWORD: ((teachers.password))
+    ensure:
+      <<: *upload_metrics
+      put: p2-api-metrics
 
 resources:
 - name: smoke-tests
