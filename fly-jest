@@ -10,7 +10,7 @@ if [ -z "$spec" ]
 then
     echo "Usage: fly-jest SPEC"
     echo
-    echo "e.g. fly-jest api/*"
+    echo "e.g. fly-jest api/p1.spec.ts"
     exit 1
 fi
 

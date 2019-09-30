@@ -16,7 +16,7 @@ meta:
       predefined_acl: "publicRead"
 
 jobs:
-- name: p1-ui
+- name: p1-tests
   plan:
   - get: source
     resource: smoke-tests
@@ -25,35 +25,24 @@ jobs:
   - task: run
     file: source/pipeline/tasks/cypress.yaml
     params:
-      SPEC: cypress/integration/publishers.spec.ts
+      SPEC: cypress/integration/p1.*.spec.ts
     on_failure: *upload_media
     ensure:
       <<: *upload_metrics
-      put: publishers-metrics
-
-- name: p1-api
-  plan:
-  - get: source
-    resource: smoke-tests
-  - get: not-often
-    trigger: true
+      put: p1-ui-metrics
   - task: run
-    file: source/pipeline/tasks/jest.yaml
-    params:
-      SPEC: ./api/*p1*
-      TEACHERS_USERNAME: ((teachers.username))
-      TEACHERS_PASSWORD: ((teachers.password))
-    ensure:
-      <<: *upload_metrics
-      put: p1-api-metrics
+      file: source/pipeline/tasks/jest.yaml
+      params:
+        SPEC: ./api/*p1*
+        TEACHERS_USERNAME: ((teachers.username))
+        TEACHERS_PASSWORD: ((teachers.password))
+      ensure:
+        <<: *upload_metrics
+        put: p1-api-metrics
 
-- name: p2-api
+- name: p2-tests
   plan:
-    - get: source
-      resource: smoke-tests
-    - get: not-often
-      trigger: true
-    - task: run
+  - task: run
       file: source/pipeline/tasks/jest.yaml
       params:
         SPEC: ./api/*p2*
@@ -79,37 +68,29 @@ resources:
     json_key: ((gcs.key))
     versioned_file: "smoke-tests/results.tar"
 
-- name: publishers-metrics
+- name: p1-ui-metrics
   type: gcs
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
     json_key: ((gcs.key))
-    versioned_file: publishers
+    versioned_file: p1-ui-metrics
 
-- name: getty-ingest-metrics
+- name: p1-api-metrics
   type: gcs
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
     json_key: ((gcs.key))
-    versioned_file: getty-ingest
+    versioned_file: p1-api-metrics
 
-- name: p1-metrics
+- name: p2-api-metrics
   type: gcs
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
     json_key: ((gcs.key))
-    versioned_file: p1-metrics
-
-- name: p2-metrics
-  type: gcs
-  icon: chart-line
-  source:
-    bucket: boclips-smoke-test-metrics
-    json_key: ((gcs.key))
-    versioned_file: p2-metrics
+    versioned_file: p2-api-metrics
 
 - name: not-often
   type: time

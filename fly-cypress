@@ -10,7 +10,7 @@ if [ -z "$spec" ]
 then
     echo "Usage: fly-cypress SPEC"
     echo
-    echo "e.g. fly-cypress cypress/integration/publishers.spec.ts"
+    echo "e.g. fly-cypress cypress/integration/p1.publishers.spec.ts"
     exit 1
 fi
 

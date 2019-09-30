@@ -13,11 +13,12 @@ trap copy_cypress_media EXIT
 produce_metric () {
     gauge_value=$1
     spec_name=$(basename "$2" .spec.ts)
+    priority=$(basename -- "$2" | cut -c 1-2 | tr a-z A-Z)
     gauge_name=boclips_smoke_test_failure_total
     cat <<EOF
 # HELP $gauge_name
 # TYPE $gauge_name gauge
-$gauge_name{spec="$spec_name"} $gauge_value.0
+$gauge_name{spec="$spec_name",priority="$priority"} $gauge_value.0
 EOF
 }
 
