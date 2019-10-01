@@ -1,10 +1,19 @@
-import request from "supertest";
+import request from "request-promise-native";
 
 describe("getty ingest", () => {
   it("200s with an empty POST", done => {
-    request("https://gettyingest.boclips.com")
-      .post("/")
-      .set("content-type", "application/json")
-      .expect(200, done);
+    request(
+      {
+        method: "POST",
+        uri: "https://gettyingest.boclips.com",
+        header: {
+          "content-type": "application/json"
+        }
+      },
+      (_, response) => {
+        expect(response.statusCode).toBe(200);
+        done();
+      }
+    );
   });
 });

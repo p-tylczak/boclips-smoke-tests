@@ -1,4 +1,5 @@
 import request from "request-promise-native";
+import {generateToken} from "./generateToken";
 
 describe("Boclips for Teacher user", () => {
   it("can log in", async () => {
@@ -8,7 +9,7 @@ describe("Boclips for Teacher user", () => {
     expect(token.length).toBeGreaterThan(50);
   });
 
-  it("can fetch my collections", async () => {
+  it("can fetch their collections", async () => {
     const token = await generateToken();
 
     const response = await request({
@@ -61,13 +62,3 @@ describe("Boclips for Teacher user", () => {
     expect(content._embedded.videos.length).toBeGreaterThan(5);
   });
 });
-
-async function generateToken() {
-  const response = await request({
-    method: "POST",
-    uri: "https://api.boclips.com/v1/token",
-    form: `grant_type=password&username=${process.env.TEACHERS_USERNAME}&password=${process.env.TEACHERS_PASSWORD}&client_id=teachers`
-  });
-
-  return JSON.parse(response).access_token;
-}
