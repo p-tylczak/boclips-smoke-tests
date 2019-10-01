@@ -22,23 +22,24 @@ jobs:
     resource: smoke-tests
   - get: not-often
     trigger: true
-  - task: run-ui-tests
-    file: source/pipeline/tasks/cypress.yaml
-    params:
-      SPEC: cypress/integration/p1.*.spec.ts
-    on_failure: *upload_media
-    ensure:
-      <<: *upload_metrics
-      put: p1-ui-metrics
-  - task: run-api-tests
-    file: source/pipeline/tasks/jest.yaml
-    params:
-      SPEC: ./api/p1*
-      TEACHERS_USERNAME: ((teachers.username))
-      TEACHERS_PASSWORD: ((teachers.password))
-    ensure:
-      <<: *upload_metrics
-      put: p1-api-metrics
+  - in_parallel:
+    - task: run-ui-tests
+      file: source/pipeline/tasks/cypress.yaml
+      params:
+        SPEC: cypress/integration/p1.*.spec.ts
+      on_failure: *upload_media
+      ensure:
+        <<: *upload_metrics
+        put: p1-ui-metrics
+    - task: run-api-tests
+      file: source/pipeline/tasks/jest.yaml
+      params:
+        SPEC: ./api/p1*
+        TEACHERS_USERNAME: ((teachers.username))
+        TEACHERS_PASSWORD: ((teachers.password))
+      ensure:
+        <<: *upload_metrics
+        put: p1-api-metrics
 
 - name: p2-tests
   plan:
