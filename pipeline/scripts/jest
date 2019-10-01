@@ -2,7 +2,7 @@
 
 produce_metric () {
     gauge_value=$1
-    spec_name=$(basename "$2" .spec.ts)
+    spec_name=$(basename -- "$2")
     priority=$(basename -- "$2" | cut -c 1-2 | tr a-z A-Z)
     gauge_name=boclips_smoke_test_failure_total
     cat <<EOF
