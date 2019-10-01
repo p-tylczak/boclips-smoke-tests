@@ -1,5 +1,5 @@
 import request from "request-promise-native";
-import { generateToken } from "./support/generateToken";
+import {generateToken} from "./support/generateToken";
 
 describe("Boclips for Teacher user", () => {
   it("can log in", async () => {
@@ -63,11 +63,9 @@ describe("Boclips for Teacher user", () => {
   });
 
   async function generateTeacherToken() {
-    const token = await generateToken(
+    return await generateToken(
         process.env.TEACHERS_USERNAME,
         process.env.TEACHERS_PASSWORD
     );
-
-    return token;
   }
 });

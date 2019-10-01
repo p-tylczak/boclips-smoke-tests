@@ -12,6 +12,7 @@ describe("getty ingest", () => {
       },
       (_, response) => {
         expect(response.statusCode).toBe(200);
+
         done();
       }
     );
