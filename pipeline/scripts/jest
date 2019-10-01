@@ -18,13 +18,14 @@ then
     exit 1
 fi
 
-metrics_output=../metrics/prometheus
+metrics_output=../../metrics/prometheus
 
 (
 cd source || exit 1
+cd api || exit 1
 npm ci || exit 1
 
-if npm run test-api -- "$SPEC"
+if npm run test -- "$SPEC"
 then
     produce_metric 0 "$SPEC" > $metrics_output
     exit 0
