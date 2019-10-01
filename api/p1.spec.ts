@@ -46,7 +46,7 @@ describe("Boclips for Teacher user", () => {
   });
 
   it("can search videos", async () => {
-    const token = await generateToken();
+    const token = await generateTeacherToken();
 
     const response = await request({
       method: "GET",
@@ -61,13 +61,13 @@ describe("Boclips for Teacher user", () => {
     expect(content._embedded.videos).toBeDefined();
     expect(content._embedded.videos.length).toBeGreaterThan(5);
   });
+
+  async function generateTeacherToken() {
+    const token = await generateToken(
+        process.env.TEACHERS_USERNAME,
+        process.env.TEACHERS_PASSWORD
+    );
+
+    return token;
+  }
 });
-
-async function generateTeacherToken() {
-  const token = await generateToken(
-    process.env.TEACHERS_USERNAME,
-    process.env.TEACHERS_PASSWORD
-  );
-
-  return token;
-}
