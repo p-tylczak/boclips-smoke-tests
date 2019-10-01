@@ -1,5 +1,5 @@
 import request from "request-promise-native";
-import {generateToken} from "./generateToken";
+import {generateToken} from "./support/generateToken";
 
 describe("Boclips for Teacher user", () => {
   it("can log in", async () => {
