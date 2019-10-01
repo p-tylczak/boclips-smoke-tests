@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 copy_cypress_media () {
-    mkdir -p source/cypress/{screenshots,videos}
-    touch source/cypress/{screenshots,videos}/tar-avoid-empty-dir
-    cd "source/cypress" || exit
+    mkdir -p source/ui/cypress/{screenshots,videos}
+    touch source/ui/cypress/{screenshots,videos}/tar-avoid-empty-dir
+    cd "source/ui/cypress" || exit
     tar -cf ../../test-results/results.tar \
         screenshots/* \
         videos/*
@@ -28,10 +28,11 @@ then
     exit 1
 fi
 
-metrics_output=../metrics/prometheus
+metrics_output=../../metrics/prometheus
 
 (
 cd source || exit 1
+cd ui || exit 1
 npm ci || exit 1
 
 if npm run test -- --spec="$SPEC"
