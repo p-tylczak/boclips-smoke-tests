@@ -1,16 +1,16 @@
 import request from "request-promise-native";
-import {generateToken} from "./support/generateToken";
+import { generateToken } from "./support/generateToken";
 
 describe("Boclips for Teacher user", () => {
   it("can log in", async () => {
-    const token = await generateToken();
+    const token = await generateTeacherToken();
 
     expect(token).toBeDefined();
     expect(token.length).toBeGreaterThan(50);
   });
 
   it("can fetch their collections", async () => {
-    const token = await generateToken();
+    const token = await generateTeacherToken();
 
     const response = await request({
       method: "GET",
@@ -27,7 +27,7 @@ describe("Boclips for Teacher user", () => {
   });
 
   it("can fetch a collection", async () => {
-    const token = await generateToken();
+    const token = await generateTeacherToken();
 
     const response = await request({
       method: "GET",
@@ -62,3 +62,12 @@ describe("Boclips for Teacher user", () => {
     expect(content._embedded.videos.length).toBeGreaterThan(5);
   });
 });
+
+async function generateTeacherToken() {
+  const token = await generateToken(
+    process.env.TEACHERS_USERNAME,
+    process.env.TEACHERS_PASSWORD
+  );
+
+  return token;
+}
