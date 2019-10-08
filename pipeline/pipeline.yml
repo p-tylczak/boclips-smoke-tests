@@ -35,8 +35,8 @@ jobs:
       file: source/pipeline/tasks/jest.yaml
       params:
         SPEC: ./api/p1*
-        TEACHERS_USERNAME: ((teachers.username))
-        TEACHERS_PASSWORD: ((teachers.password))
+        TEACHERS_USERNAME: ((smoke-tests-teachers.username))
+        TEACHERS_PASSWORD: ((smoke-tests-teachers.password))
       ensure:
         <<: *upload_metrics
         put: p1-api-metrics
@@ -51,8 +51,8 @@ jobs:
     file: source/pipeline/tasks/jest.yaml
     params:
       SPEC: ./api/p2*
-      TEACHERS_USERNAME: ((teachers.username))
-      TEACHERS_PASSWORD: ((teachers.password))
+      TEACHERS_USERNAME: ((smoke-tests-teachers.username))
+      TEACHERS_PASSWORD: ((smoke-tests-teachers.password))
     ensure:
       <<: *upload_metrics
       put: p2-api-metrics
