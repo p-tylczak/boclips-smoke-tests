@@ -50,7 +50,7 @@ describe("Boclips for Teacher user", () => {
 
     const response = await request({
       method: "GET",
-      uri: "https://api.boclips.com/v1/videos?q=climate",
+      uri: "https://api.boclips.com/v1/videos?query=climate",
       auth: {
         bearer: token
       }
