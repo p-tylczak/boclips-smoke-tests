@@ -25,6 +25,7 @@ jobs:
   - in_parallel:
     - task: run-ui-tests
       file: source/pipeline/tasks/cypress.yaml
+      attempts: 2
       params:
         SPEC: cypress/integration/p1.*.spec.ts
       on_failure: *upload_media
@@ -33,6 +34,7 @@ jobs:
         put: p1-ui-metrics
     - task: run-api-tests
       file: source/pipeline/tasks/jest.yaml
+      attempts: 2
       params:
         SPEC: ./api/p1*
         TEACHERS_USERNAME: ((smoke-tests-teachers.username))
