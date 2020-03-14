@@ -1,17 +1,19 @@
 import request from "request-promise-native";
-import {generateToken} from "./support/generateToken";
+import { generateToken } from "./support/generateToken";
 
 describe("Boclips for Teacher user", () => {
-  it("can log in", async () => {
-    const token = await generateTeacherToken();
+  let token;
 
+  beforeAll(async () => {
+    token = await generateTeacherToken();
+  });
+
+  it("can log in", async () => {
     expect(token).toBeDefined();
     expect(token.length).toBeGreaterThan(50);
   });
 
   it("can fetch their collections", async () => {
-    const token = await generateTeacherToken();
-
     const response = await request({
       method: "GET",
       uri:
@@ -27,8 +29,6 @@ describe("Boclips for Teacher user", () => {
   });
 
   it("can fetch a collection", async () => {
-    const token = await generateTeacherToken();
-
     const response = await request({
       method: "GET",
       uri: "https://api.boclips.com/v1/collections/5d680e50aefd6e74e8166839",
@@ -46,8 +46,6 @@ describe("Boclips for Teacher user", () => {
   });
 
   it("can search videos", async () => {
-    const token = await generateTeacherToken();
-
     const response = await request({
       method: "GET",
       uri: "https://api.boclips.com/v1/videos?query=climate",
@@ -64,8 +62,8 @@ describe("Boclips for Teacher user", () => {
 
   async function generateTeacherToken() {
     return await generateToken(
-        process.env.TEACHERS_USERNAME,
-        process.env.TEACHERS_PASSWORD
+      process.env.TEACHERS_USERNAME,
+      process.env.TEACHERS_PASSWORD
     );
   }
 });
