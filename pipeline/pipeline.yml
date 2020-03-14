@@ -103,7 +103,7 @@ resources:
   type: time
   icon: clock-outline
   source:
-    interval: 10m
+    interval: 20m
 
 resource_types:
 - name: gcs
