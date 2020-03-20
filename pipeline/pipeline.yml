@@ -35,6 +35,7 @@ jobs:
     - task: run-api-tests
       file: source/pipeline/tasks/jest.yaml
       attempts: 2
+      timeout: 0h2m
       params:
         SPEC: ./api/p1*
         TEACHERS_USERNAME: ((smoke-tests-teachers.username))
