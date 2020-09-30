@@ -25,7 +25,6 @@ jobs:
   - in_parallel:
     - task: run-ui-tests
       file: source/pipeline/tasks/cypress.yaml
-      attempts: 2
       params:
         SPEC: cypress/integration/p1.publishers.spec.ts
       on_failure: *upload_media
@@ -34,7 +33,6 @@ jobs:
         put: p1-ui-metrics
     - task: run-api-tests
       file: source/pipeline/tasks/jest.yaml
-      attempts: 2
       timeout: 0h2m
       params:
         SPEC: ./api/p1.spec.ts
