@@ -57,6 +57,12 @@ jobs:
     ensure:
       <<: *upload_metrics
       put: p2-api-metrics
+  - task: run-publisher-ui-tests
+    file: source/pipeline/tasks/publishers.yml
+    params:
+      CYPRESS_PUBLISHER_USERNAME: ((smoke-tests.publisher.username))
+      CYPRESS_PUBLISHER_PASSWORD: ((smoke-tests.publisher.password))
+    on_failure: *upload_media
 
 resources:
 - name: smoke-tests

@@ -4,18 +4,23 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: cypress/base
-    tag: "10"
+    repository: cypress/browsers
+    tag: "node12.14.1-chrome83-ff77"
 
 inputs:
 - name: source
 
 outputs:
 - name: test-results
-- name: metrics
 
 run:
-  path: source/pipeline/scripts/cypress
+  path: sh
+  args:
+  - -ec
+  - |-
+    cd source/ui
+    npm ci
+    npm run test -- --spec=cypress/integration/publisher.spec.ts --browser chrome
 
 params:
   CYPRESS_PUBLISHER_USERNAME:
