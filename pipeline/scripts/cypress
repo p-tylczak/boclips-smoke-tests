@@ -35,7 +35,7 @@ cd source || exit 1
 cd ui || exit 1
 npm ci || exit 1
 
-if npm run test -- --spec="$SPEC"
+if npm run test -- --spec="$SPEC" --browser chrome
 then
     produce_metric 0 "$SPEC" > $metrics_output
     exit 0
