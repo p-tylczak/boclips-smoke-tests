@@ -4,10 +4,19 @@ set -e
 
 cwd="$(cd "$(dirname "$0")" && pwd)"
 
+if [ -z "$spec" ]
+then
+    echo "Usage: fly-cypress-no-metrics SPEC"
+    echo
+    echo "e.g. fly-cypress-no-metrics cypress/integration/p1.publishers.spec.ts"
+    exit 1
+fi
+
 CYPRESS_PUBLISHER_USERNAME="$(bo show credential concourse-main smoke-tests.publisher username)" \
 CYPRESS_PUBLISHER_PASSWORD="$(bo show credential concourse-main smoke-tests.publisher password)" \
+SPEC="$spec" \
 fly --target ci \
     execute \
-    --config "$cwd/pipeline/tasks/publishers.yml" \
+    --config "$cwd/pipeline/tasks/cypress-no-metrics.yml" \
     --input source="$cwd" \
     --output test-results=test-results

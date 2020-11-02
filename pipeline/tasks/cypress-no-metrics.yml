@@ -20,11 +20,12 @@ run:
   - |-
     cd source/ui
     npm ci
-    npm run test -- --spec=cypress/integration/publisher.spec.ts --browser chrome
+    npm run test -- --spec="$SPEC" --browser chrome
 
 params:
   CYPRESS_PUBLISHER_USERNAME:
   CYPRESS_PUBLISHER_PASSWORD:
+  SPEC:
 
 caches:
 - path: ../../../root/.cache

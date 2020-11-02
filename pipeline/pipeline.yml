@@ -58,8 +58,9 @@ jobs:
       <<: *upload_metrics
       put: p2-api-metrics
   - task: run-publisher-ui-tests
-    file: source/pipeline/tasks/publishers.yml
+    file: source/pipeline/tasks/cypress-no-metrics.yml
     params:
+      SPEC: cypress/integration/publisher.spec.ts
       CYPRESS_PUBLISHER_USERNAME: ((publisher.username))
       CYPRESS_PUBLISHER_PASSWORD: ((publisher.password))
     on_failure: *upload_media
