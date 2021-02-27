@@ -12,12 +12,19 @@ inputs:
 
 outputs:
 - name: test-results
-- name: metrics
 
 run:
-  path: source/pipeline/scripts/cypress
+  path: sh
+  args:
+  - -ec
+  - |-
+    cd source/ui
+    npm ci
+    npm run test -- --spec="$SPEC" --browser chrome
 
 params:
+  CYPRESS_PUBLISHER_USERNAME:
+  CYPRESS_PUBLISHER_PASSWORD:
   SPEC:
 
 caches:
