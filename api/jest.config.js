@@ -1,10 +1,11 @@
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  preset: "ts-jest",
+  testEnvironment: "node",
   globals: {
-    'ts-jest': {
-      tsConfig: 'tsconfig.json',
+    "ts-jest": {
+      tsConfig: "tsconfig.json",
     },
   },
-  setupFilesAfterEnv: ['./jest.setup.js']
+  setupFilesAfterEnv: ["./jest.setup.js"],
+  testRunner: "jest-circus/runner",
 };
