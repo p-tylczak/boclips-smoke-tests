@@ -81,7 +81,6 @@ resources:
   icon: video
   source:
     bucket: boclips-test-results
-    json_key: ((gcs.key))
     versioned_file: "smoke-tests/results.tar"
 
 - name: p1-ui-metrics
@@ -89,7 +88,6 @@ resources:
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
-    json_key: ((gcs.key))
     versioned_file: p1-ui-metrics
 
 - name: p1-api-metrics
@@ -97,7 +95,6 @@ resources:
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
-    json_key: ((gcs.key))
     versioned_file: p1-api-metrics
 
 - name: p2-api-metrics
@@ -105,7 +102,6 @@ resources:
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
-    json_key: ((gcs.key))
     versioned_file: p2-api-metrics
 
 - name: not-often
