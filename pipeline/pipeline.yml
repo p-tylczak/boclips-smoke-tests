@@ -32,6 +32,7 @@ jobs:
         <<: *upload_metrics
         put: p1-ui-metrics
     - task: run-bo-web-app-ui-tests
+      tags: [ isolated ]
       file: source/pipeline/tasks/cypress.yaml
       params:
         SPEC: cypress/integration/p1.bo-web-app.spec.ts
