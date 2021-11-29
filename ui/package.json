@@ -5,9 +5,9 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "@testing-library/cypress": "^7.0.1",
-    "cypress": "^3.4.1",
-    "prettier": "^1.18.2"
+    "@testing-library/cypress": "^8.0.2",
+    "cypress": "^9.1.0",
+    "prettier": "^2.5.0"
   },
   "scripts": {
     "cypress:open": "./node_modules/.bin/cypress open",
