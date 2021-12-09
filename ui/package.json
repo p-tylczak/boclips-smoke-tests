@@ -11,7 +11,7 @@
   },
   "scripts": {
     "cypress:open": "./node_modules/.bin/cypress open",
-    "test": "./node_modules/.bin/cypress run --reporter junit --reporter-options \\\"mochaFile=./cypress/results/test-output.xml\\\""
+    "test": "./node_modules/.bin/cypress run --reporter junit"
   },
   "author": "",
   "license": "ISC"
