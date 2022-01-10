@@ -27,6 +27,7 @@ jobs:
       file: source/pipeline/tasks/cypress.yaml
       params:
         SPEC: cypress/integration/p1.legacy-publishers.spec.ts
+        DESCRIPTION: Legacy publishers UI spec is failing
       on_failure: *upload_media
       ensure:
         <<: *upload_metrics
@@ -36,6 +37,7 @@ jobs:
       file: source/pipeline/tasks/cypress.yaml
       params:
         SPEC: cypress/integration/p1.bo-web-app.spec.ts
+        DESCRIPTION: Bo web app UI spec is failing
         CYPRESS_PUBLISHER_USERNAME: ((publisher.username))
         CYPRESS_PUBLISHER_PASSWORD: ((publisher.password))
       on_failure: *upload_media
@@ -47,6 +49,7 @@ jobs:
       timeout: 0h2m
       params:
         SPEC: ./api/p1.spec.ts
+        DESCRIPTION: API spec is failing
         TEACHERS_USERNAME: ((smoke-tests-teachers.username))
         TEACHERS_PASSWORD: ((smoke-tests-teachers.password))
       ensure:
@@ -63,6 +66,7 @@ jobs:
     file: source/pipeline/tasks/jest.yaml
     params:
       SPEC: ./api/p2.spec.ts
+      DESCRIPTION: API spec is failing
       TEACHERS_USERNAME: ((smoke-tests-teachers.username))
       TEACHERS_PASSWORD: ((smoke-tests-teachers.password))
     ensure:

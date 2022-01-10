@@ -3,18 +3,19 @@
 set -e
 
 spec=$1
+description=$2
 
 cwd="$(cd "$(dirname "$0")" && pwd)"
 
-if [ -z "$spec" ]
+if [ -z "$spec" ] || [ -z "$description" ]
 then
-    echo "Usage: fly-cypress SPEC"
+    echo "Usage: fly-cypress SPEC DESCRIPTION"
     echo
-    echo "e.g. fly-cypress cypress/integration/p1.publishers.spec.ts"
+    echo "e.g. fly-cypress cypress/integration/p1.publishers.spec.ts 'this is a useful test'"
     exit 1
 fi
 
-SPEC=$spec fly --target ci \
+SPEC=$spec DESCRIPTION=$description fly --target ci \
     execute \
     --config "$cwd/pipeline/tasks/cypress.yaml" \
     --input source="$cwd" \

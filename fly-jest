@@ -3,18 +3,19 @@
 set -e
 
 spec=$1
+description=$2
 
 cwd="$(cd "$(dirname "$0")" && pwd)"
 
-if [ -z "$spec" ]
+if [ -z "$spec" ] || [ -z "$description" ]
 then
-    echo "Usage: fly-jest SPEC"
+    echo "Usage: fly-jest SPEC DESCRIPTION"
     echo
-    echo "e.g. fly-jest api/p1.spec.ts"
+    echo "e.g. fly-jest api/p1.spec.ts my-description"
     exit 1
 fi
 
-SPEC=$spec fly --target ci \
+DESCRIPTION=$description SPEC=$spec fly --target ci \
     execute \
     --config "$cwd/pipeline/tasks/jest.yaml" \
     --input source="$cwd" \

@@ -14,17 +14,24 @@ produce_metric () {
     gauge_value=$1
     spec_name=$(basename -- "$2")
     priority=$(basename -- "$2" | cut -c 1-2 | tr a-z A-Z)
+    description=$3
     gauge_name=boclips_smoke_test_failure_total
     cat <<EOF
 # HELP $gauge_name
 # TYPE $gauge_name gauge
-$gauge_name{spec="$spec_name",priority="$priority"} $gauge_value.0
+$gauge_name{spec="$spec_name",priority="$priority",description="$description"} $gauge_value.0
 EOF
 }
 
 if [ -z "$SPEC" ]
 then
     echo "Must specify SPEC"
+    exit 1
+fi
+
+if [ -z "$DESCRIPTION" ]
+then
+    echo "Must specify DESCRIPTION"
     exit 1
 fi
 
@@ -37,10 +44,10 @@ npm ci || exit 1
 
 if npm run test -- --spec="$SPEC" --browser chrome
 then
-    produce_metric 0 "$SPEC" > $metrics_output
+    produce_metric 0 "$SPEC" "$DESCRIPTION" > $metrics_output
     exit 0
 else
-    produce_metric 1 "$SPEC" > $metrics_output
+    produce_metric 1 "$SPEC" "$DESCRIPTION" > $metrics_output
     exit 1
 fi
 )
