@@ -7,5 +7,4 @@ module.exports = {
     },
   },
   setupFilesAfterEnv: ["./jest.setup.js"],
-  testRunner: "jest-circus/runner",
 };

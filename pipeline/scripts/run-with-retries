@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+spec=$1
+number_of_retries=$2
+counter=1
+npm run test -- "$spec"
+test_succeeded=$?
+
+while [[ $test_succeeded -ne 0  && $counter -lt $(($number_of_retries+1)) ]]
+do
+  echo "Retrying tests $counter / $number_of_retries"
+  echo "Waiting for a bit"
+  sleep_time=$((counter*5))
+  sleep $sleep_time
+
+  npm run test -- "$spec"
+  test_succeeded=$?
+  ((counter++))
+done
+exit $test_succeeded

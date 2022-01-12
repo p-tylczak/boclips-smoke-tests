@@ -26,18 +26,22 @@ then
 fi
 
 metrics_output=../../metrics/prometheus
+cwd="$(cd "$(dirname "$0")" && pwd)"
 
 (
 cd source || exit 1
 cd api || exit 1
 npm ci || exit 1
 
-if npm run test -- "$SPEC"
+retries=3
+"$cwd/run-with-retries" $SPEC $retries
+
+if [[ $? -ne 0 ]]
 then
-    produce_metric 0 "$SPEC" "$DESCRIPTION" > $metrics_output
-    exit 0
+  produce_metric 1 "$SPEC" "$DESCRIPTION" > $metrics_output
+  exit 1
 else
-    produce_metric 1 "$SPEC" "$DESCRIPTION" > $metrics_output
-    exit 1
+  produce_metric 0 "$SPEC" "$DESCRIPTION" > $metrics_output
+  exit 0
 fi
 )

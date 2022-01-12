@@ -8,6 +8,6 @@
     "plugins": [{ "name": "tslint-language-service" }],
     "module": "ESNext",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
   }
 }
