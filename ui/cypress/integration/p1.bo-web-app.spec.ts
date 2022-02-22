@@ -15,8 +15,7 @@ context('Boclips web app', () => {
         cy.get('#username').type(username);
         cy.get('#password').type(password);
         cy.get('#kc-form-login').submit();
-        cy.get('[data-qa=search-input]').type("cats");
-        cy.findByRole('button', {name: /Search/i}).click();
+        cy.findByPlaceholderText('Search for videos').type("cats" + '{enter}');
 
 
         cy.get("[data-qa=search-hits]").contains('10000')
