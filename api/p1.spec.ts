@@ -61,6 +61,21 @@ describe("API P1 Test", () => {
     expect(content._embedded.videos.length).toBeGreaterThan(5);
   });
 
+    it("can access disciplines", async () => {
+        const response = await request({
+            method: "GET",
+            uri: "https://api.boclips.com/v1/disciplines?visibility=all",
+            auth: {
+                bearer: token
+            }
+        });
+
+        const content = JSON.parse(response);
+
+        expect(content._embedded.disciplines).toBeDefined();
+        expect(content._embedded.disciplines.length).toBeGreaterThanOrEqual(6);
+    });
+
   async function generateTeacherToken() {
     return await generateToken(
       process.env.TEACHERS_USERNAME,
