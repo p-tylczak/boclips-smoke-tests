@@ -7,6 +7,8 @@ context('Boclips web app', () => {
         cy.get('#username').type(username);
         cy.get('#password').type(password);
         cy.get('#kc-form-login').submit();
+
+        cy.findAllByRole('button', {name: /Discipline/i}).should('have.length', 8)
         cy.findByRole('button', {name: /Search/i}).should('exist');
 
         cy.findByPlaceholderText('Search for videos').type("cats" + '{enter}');
