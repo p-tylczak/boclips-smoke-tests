@@ -11,8 +11,6 @@ context('Boclips web app', () => {
 
         cy.findByPlaceholderText('Search for videos').type("cats" + '{enter}');
 
-
-        // cy.get("[data-qa=search-hits]").contains('10000')
         cy.get("[data-qa=search-hits]").should((searchHitsSpan) => {
             const numberOfResults = parseInt(searchHitsSpan.text());
             assert.isAtLeast(numberOfResults, 500);
