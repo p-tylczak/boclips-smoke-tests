@@ -9,6 +9,8 @@ context('Boclips web app', () => {
         cy.get('#kc-form-login').submit();
         cy.findByRole('button', {name: /Search/i}).should('exist');
 
+        cy.get('#hs-eu-confirmation-button').click();
+
         cy.findByPlaceholderText('Search for videos').type("cats" + '{enter}');
 
         cy.get("[data-qa=search-hits]").should((searchHitsSpan) => {
