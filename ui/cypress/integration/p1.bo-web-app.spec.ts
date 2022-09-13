@@ -1,21 +1,70 @@
-context('Boclips web app', () => {
-    const username = Cypress.env('PUBLISHER_USERNAME');
-    const password = Cypress.env('PUBLISHER_PASSWORD');
+context("Boclips web app", () => {
+  const username = Cypress.env("PUBLISHER_USERNAME");
+  const password = Cypress.env("PUBLISHER_PASSWORD");
 
-    it('can detect reduced index size on search page', {retries: 3}, () => {
-        cy.visit('https://app.boclips.com');
-        cy.get('#username').type(username);
-        cy.get('#password').type(password);
-        cy.get('#kc-form-login').submit();
-        cy.findByRole('button', {name: /Search/i}).should('exist');
+  // Login once and preserve cookies each time
+  before(() => {
+    cy.visit("https://app.boclips.com");
+    cy.get("#username").type(username);
+    cy.get("#password").type(password);
+    cy.get("#kc-form-login").submit();
+  });
 
-        cy.get('#hs-eu-confirmation-button').click();
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce(
+      "KEYCLOAK_SESSION",
+      "AUTH_SESSION_ID",
+      "KEYCLOAK_IDENTITY"
+    );
+  });
 
-        cy.findByPlaceholderText('Search for videos').type("cats" + '{enter}');
+  it("can detect reduced index size on search page", { retries: 3 }, () => {
+    cy.visit("https://app.boclips.com");
 
-        cy.get("[data-qa=search-hits]").should((searchHitsSpan) => {
-            const numberOfResults = parseInt(searchHitsSpan.text());
-            assert.isAtLeast(numberOfResults, 500);
-        });
-    });
+    cy.get("#hs-eu-confirmation-button").click();
+    cy.findByRole("button", { name: /Search/i }).should("exist");
+
+    cy.findByPlaceholderText("Search for videos").type("cats" + "{enter}");
+
+    cy.get("[data-qa=search-hits]")
+      .should("exist")
+      .and((searchHitsSpan) => {
+        const numberOfResults = parseInt(searchHitsSpan.text());
+        assert.isAtLeast(numberOfResults, 500);
+      });
+  });
+
+  it("can play a video", { retries: 3 }, () => {
+    cy.visit("https://videos.boclips.com");
+
+    cy.get("#hs-eu-confirmation-button").click();
+
+    cy.findByPlaceholderText("Search for videos").type(
+      '"Cat Scratch Disease | Causes, Symptoms and Treatment"' + "{enter}"
+    );
+    cy.findAllByText("Cat Scratch Disease | Causes, Symptoms and Treatment")
+      .closest("a")
+      .click();
+
+    // Wait for the video to load by checking the src is not the default one
+    cy.get("video")
+      .should("have.prop", "paused", true)
+      .should((video) => {
+        expect(video[0].src).to.not.equal(
+          "https://cdn.plyr.io/static/blank.mp4"
+        );
+        expect(video[0].src).to.not.equal("");
+      });
+
+    cy.findByRole("button", { name: "Play" }).click();
+
+    cy.get("video").should("have.prop", "paused", false);
+
+    // Wait for the first 2 seconds to play
+    cy.get("video").should((video) => expect(video[0].currentTime).to.be.gt(2));
+
+    // Pause the video
+    cy.get('[data-qa="player"]').click();
+    cy.get("video").should("have.prop", "paused", true);
+  });
 });
