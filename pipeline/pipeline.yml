@@ -23,15 +23,6 @@ jobs:
   - get: not-often
     trigger: true
   - in_parallel:
-    - task: run-ui-tests
-      file: source/pipeline/tasks/cypress.yaml
-      params:
-        SPEC: cypress/integration/p1.legacy-publishers.spec.ts
-        DESCRIPTION: Legacy publishers UI spec is failing
-      on_failure: *upload_media
-      ensure:
-        <<: *upload_metrics
-        put: p1-ui-metrics
     - task: run-bo-web-app-ui-tests
       tags: [ isolated ]
       file: source/pipeline/tasks/cypress.yaml
