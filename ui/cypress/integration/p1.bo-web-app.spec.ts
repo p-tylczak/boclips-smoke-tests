@@ -56,7 +56,7 @@ context("Boclips web app", () => {
         expect(video[0].src).to.not.equal("");
       });
 
-    cy.wait(500);
+    cy.wait(1000);
 
     cy.findByRole("button", { name: "Play" }).click();
 
