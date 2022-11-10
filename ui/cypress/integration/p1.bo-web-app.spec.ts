@@ -34,7 +34,7 @@ context("Boclips web app", () => {
       });
   });
 
-  it("can play a video", { retries: 3 }, () => {
+  it.skip("can play a video", { retries: 3 }, () => {
     cy.visit("https://videos.boclips.com");
 
     cy.get("#hs-eu-confirmation-button").click();
