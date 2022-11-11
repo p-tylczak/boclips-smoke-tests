@@ -20,7 +20,7 @@ import './commands'
 // require('./commands')
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-    if (err.message.includes('Unexpected token \'<\', "<!DOCTYPE "... is not valid JSON')) {
+    if (err.message.includes('Unexpected token')) {
         return false
     }
 })
