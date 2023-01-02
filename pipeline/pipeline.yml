@@ -69,7 +69,7 @@ resources:
   type: git
   icon: fire
   source:
-    branch: master
+    branch: main
     uri: https://github.com/boclips/smoke-tests.git
 
 - name: test-results
