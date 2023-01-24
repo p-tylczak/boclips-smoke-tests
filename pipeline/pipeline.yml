@@ -5,7 +5,6 @@ meta:
     put: test-results
     params:
       file: test-results/results.tar
-      predefined_acl: projectPrivate
 
   upload_metrics:
     &upload_metrics
@@ -13,7 +12,6 @@ meta:
     params:
       file: metrics/prometheus
       cache_control: "private, max-age=0, no-transform"
-      predefined_acl: "publicRead"
 
 
 jobs:
