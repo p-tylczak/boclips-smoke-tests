@@ -83,6 +83,7 @@ resources:
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
+    json_key: ((gcs.key))
     versioned_file: p1-ui-metrics
 
 - name: p1-api-metrics
@@ -90,6 +91,7 @@ resources:
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
+    json_key: ((gcs.key))
     versioned_file: p1-api-metrics
 
 - name: p2-api-metrics
@@ -97,6 +99,7 @@ resources:
   icon: chart-line
   source:
     bucket: boclips-smoke-test-metrics
+    json_key: ((gcs.key))
     versioned_file: p2-api-metrics
 
 - name: not-often
@@ -110,4 +113,4 @@ resource_types:
   type: registry-image
   source:
     repository: frodenas/gcs-resource
-    tag: "v0.5.1"
+    tag: "v0.6.0"
