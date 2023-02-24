@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 copy_cypress_media () {
-    mkdir -p source/test-results
+    mkdir -p test-results
     mkdir -p source/ui/cypress/{screenshots,videos}
     touch source/ui/cypress/{screenshots,videos}/tar-avoid-empty-dir
     cd "source/ui/cypress" || exit
-    tar -cf ../../test-results/results.tar \
+    tar -cf ../../../test-results/results.tar \
         screenshots/* \
         videos/*
 }
