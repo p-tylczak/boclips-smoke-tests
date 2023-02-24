@@ -2,23 +2,22 @@ context("Boclips web app", () => {
   const username = Cypress.env("PUBLISHER_USERNAME");
   const password = Cypress.env("PUBLISHER_PASSWORD");
 
-  // Login once and preserve cookies each time
-  before(() => {
+  const logInAndPreserveCookies = () => {
     cy.visit("https://app.boclips.com");
     cy.get("#username").type(username);
     cy.get("#password").type(password);
     cy.get("#kc-form-login").submit();
-  });
 
-  beforeEach(() => {
     Cypress.Cookies.preserveOnce(
-      "KEYCLOAK_SESSION",
-      "AUTH_SESSION_ID",
-      "KEYCLOAK_IDENTITY"
+        "KEYCLOAK_SESSION",
+        "AUTH_SESSION_ID",
+        "KEYCLOAK_IDENTITY"
     );
-  });
+  }
 
   it("can detect reduced index size on search page", { retries: 3 }, () => {
+    logInAndPreserveCookies()
+
     cy.visit("https://app.boclips.com");
 
     cy.get("#hs-eu-confirmation-button").click();
@@ -35,6 +34,8 @@ context("Boclips web app", () => {
   });
 
   it.skip("can play a video", { retries: 3 }, () => {
+    logInAndPreserveCookies()
+
     cy.visit("https://videos.boclips.com");
 
     cy.get("#hs-eu-confirmation-button").click();
