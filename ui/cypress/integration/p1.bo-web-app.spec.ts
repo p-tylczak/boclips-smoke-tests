@@ -4,8 +4,10 @@ context("Boclips web app", () => {
 
   const logInAndPreserveCookies = () => {
     cy.visit("https://app.boclips.com");
-    cy.get("#username").type(username);
-    cy.get("#password").type(password);
+
+    cy.get("#username").invoke('val', username);
+    cy.get("#password").invoke('val', password);
+
     cy.get("#kc-form-login").submit();
 
     Cypress.Cookies.preserveOnce(
