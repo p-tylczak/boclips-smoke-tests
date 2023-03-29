@@ -1,6 +1,9 @@
 context("Boclips web app", () => {
   const username = Cypress.env("PUBLISHER_USERNAME");
   const password = Cypress.env("PUBLISHER_PASSWORD");
+  before(() => {
+    logInAndPreserveCookies()
+  })
 
   const logInAndPreserveCookies = () => {
     cy.visit("https://app.boclips.com");
@@ -36,9 +39,7 @@ context("Boclips web app", () => {
   });
 
   it.skip("can play a video", { retries: 3 }, () => {
-    logInAndPreserveCookies()
-
-    cy.visit("https://videos.boclips.com");
+    cy.visit("https://app.boclips.com");
 
     cy.get("#hs-eu-confirmation-button").click();
 
