@@ -21,8 +21,6 @@ context("Boclips web app", () => {
   }
 
   it("can detect reduced index size on search page", { retries: 3 }, () => {
-    logInAndPreserveCookies()
-
     cy.visit("https://app.boclips.com");
 
     cy.get("#hs-eu-confirmation-button").click();
