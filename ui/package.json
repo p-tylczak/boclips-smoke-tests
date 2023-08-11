@@ -6,8 +6,8 @@
   "dependencies": {},
   "devDependencies": {
     "typescript": "^4.5.2",
-    "@testing-library/cypress": "^8.0.2",
-    "cypress": "^9.1.1",
+    "@testing-library/cypress": "^9.0.0",
+    "cypress": "^12.17.3",
     "prettier": "^2.5.1"
   },
   "scripts": {

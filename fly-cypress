@@ -11,7 +11,7 @@ if [ -z "$spec" ] || [ -z "$description" ]
 then
     echo "Usage: fly-cypress SPEC DESCRIPTION"
     echo
-    echo "e.g. fly-cypress cypress/integration/p1.publishers.spec.ts 'this is a useful test'"
+    echo "e.g. fly-cypress cypress/integration/p1.teachers.spec.ts 'this is a useful test'"
     exit 1
 fi
 

@@ -20,7 +20,8 @@ import './commands'
 // require('./commands')
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-    if (err.message.includes('Unexpected token')) {
+    if (err.message.includes('Unexpected token') ||err.message.includes('ResizeObserver loop ')) {
         return false
     }
 })
+

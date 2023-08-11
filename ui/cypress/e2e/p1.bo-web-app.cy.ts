@@ -1,29 +1,22 @@
 context("Boclips web app", () => {
   const username = Cypress.env("PUBLISHER_USERNAME");
   const password = Cypress.env("PUBLISHER_PASSWORD");
-  before(() => {
-    logInAndPreserveCookies()
-  })
 
-  const logInAndPreserveCookies = () => {
+
+  it("can detect reduced index size on search page", { retries: 3 }, () => {
     cy.visit("https://app.boclips.com");
+
+    cy.get('body').then($body => {
+      if ($body.find('#hs-eu-confirmation-button').length > 0) {
+        cy.get("#hs-eu-confirmation-button").click();
+      }
+    })
 
     cy.get("#username").invoke('val', username);
     cy.get("#password").invoke('val', password);
 
     cy.get("#kc-form-login").submit();
 
-    Cypress.Cookies.preserveOnce(
-        "KEYCLOAK_SESSION",
-        "AUTH_SESSION_ID",
-        "KEYCLOAK_IDENTITY"
-    );
-  }
-
-  it("can detect reduced index size on search page", { retries: 3 }, () => {
-    cy.visit("https://app.boclips.com");
-
-    cy.get("#hs-eu-confirmation-button").click();
     cy.findByRole("button", { name: /Search/i }).should("exist");
 
     cy.findByPlaceholderText("Search for videos").type("cats" + "{enter}");
@@ -39,7 +32,11 @@ context("Boclips web app", () => {
   it.skip("can play a video", { retries: 3 }, () => {
     cy.visit("https://app.boclips.com");
 
-    cy.get("#hs-eu-confirmation-button").click();
+    cy.get('body').then($body => {
+      if ($body.find('#hs-eu-confirmation-button').length > 0) {
+        cy.get("#hs-eu-confirmation-button").click();
+      }
+    })
 
     cy.findByPlaceholderText("Search for videos").type(
       '"Cat Scratch Disease | Causes, Symptoms and Treatment"' + "{enter}"

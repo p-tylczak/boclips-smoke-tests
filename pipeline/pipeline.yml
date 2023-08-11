@@ -34,6 +34,17 @@ jobs:
       ensure:
         <<: *upload_metrics
         put: p1-ui-metrics
+    - task: run-bo-web-app-ui-tests
+      tags: [ isolated ]
+      file: source/pipeline/tasks/cypress.yaml
+      params:
+        SPEC: cypress/integration/p1.teachers.spec.ts
+        CYPRESS_TEACHERS_USERNAME: ((smoke-tests-teachers.username))
+        CYPRESS_TEACHERS_PASSWORD: ((smoke-tests-teachers.password))
+      on_failure: *upload_media
+      ensure:
+        <<: *upload_metrics
+        put: p1-ui-metrics
     - task: run-api-tests
       file: source/pipeline/tasks/jest.yaml
       timeout: 0h2m
