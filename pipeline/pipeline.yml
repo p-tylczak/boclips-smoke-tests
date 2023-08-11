@@ -26,7 +26,7 @@ jobs:
       tags: [ isolated ]
       file: source/pipeline/tasks/cypress.yaml
       params:
-        SPEC: cypress/integration/p1.bo-web-app.cy.ts
+        SPEC: cypress/e2e/p1.bo-web-app.cy.ts
         DESCRIPTION: Bo web app UI spec is failing
         CYPRESS_PUBLISHER_USERNAME: ((publisher.username))
         CYPRESS_PUBLISHER_PASSWORD: ((publisher.password))
@@ -34,11 +34,12 @@ jobs:
       ensure:
         <<: *upload_metrics
         put: p1-ui-metrics
-    - task: run-bo-web-app-ui-tests
+    - task: run-bo-teachers-ui-tests
       tags: [ isolated ]
       file: source/pipeline/tasks/cypress.yaml
       params:
-        SPEC: cypress/integration/p1.teachers.cy.ts
+        SPEC: cypress/e2e/p1.teachers.cy.ts
+        DESCRIPTION: Teachers UI spec is failing
         CYPRESS_TEACHERS_USERNAME: ((smoke-tests-teachers.username))
         CYPRESS_TEACHERS_PASSWORD: ((smoke-tests-teachers.password))
       on_failure: *upload_media
@@ -49,7 +50,7 @@ jobs:
       file: source/pipeline/tasks/jest.yaml
       timeout: 0h2m
       params:
-        SPEC: ./api/p1.cy.ts
+        SPEC: ./api/p1.spec.ts
         DESCRIPTION: API spec is failing
         TEACHERS_USERNAME: ((smoke-tests-teachers.username))
         TEACHERS_PASSWORD: ((smoke-tests-teachers.password))
